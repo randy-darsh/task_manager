@@ -15,6 +15,9 @@ class TaskManagerApp < Sinatra::Base
   end
 
   post '/tasks' do
-    "<p>Params: #{params}</p> <p>Task params: #{params[:task]}</p>"
+    task = Task.new(params[:task])
+    task.save
+    redirect '/tasks'
   end
+
 end
