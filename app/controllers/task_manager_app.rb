@@ -1,3 +1,5 @@
+require_relative '../models/task.rb'
+
 class TaskManagerApp < Sinatra::Base
   set :root, File.expand_path("..", __dir__)
 
@@ -6,12 +8,17 @@ class TaskManagerApp < Sinatra::Base
   end
 
   get '/tasks' do
-    @tasks = ["task1", "task2", "task3"]
+    @tasks = Task.all
     erb :index
   end
 
   get '/tasks/new' do
     erb :new
+  end
+
+  get '/tasks/:id' do
+    @task = Task.find(params[:id])
+    erb :show
   end
 
   post '/tasks' do
@@ -20,4 +27,18 @@ class TaskManagerApp < Sinatra::Base
     redirect '/tasks'
   end
 
+  get '/tasks/:id/edit' do
+    @task = Task.find(params[:id])
+    erb :edit
+  end
+
+  put '/tasks/:id' do |id|
+    Task.update(id.to_i, params[:task])
+    redirect "/tasks/#{id}"
+  end
+
+  delete '/tasks/:id' do |id|
+    Task.destroy(id.to_i)
+    redirect '/tasks'
+  end
 end
