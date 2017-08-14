@@ -12,8 +12,7 @@ class Task
   end
 
   def save
-    @database.execute("INSERT INTO tasks (title, description) VALUES (?, ?);",
-      @title, @description)
+    @database.execute("INSERT INTO tasks (title, description) VALUES (?, ?);", @title, @description)
   end
 
   def self.all
