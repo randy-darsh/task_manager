@@ -24,6 +24,11 @@ class TaskManagerApp < Sinatra::Base
     redirect '/tasks'
   end
 
+  get '/tasks/:id' do
+    @task = Task.find(params[:id])
+    erb :show
+  end
+
   put '/tasks/:id' do |id|
     Task.update(id.to_i, params[:task])
     redirect "/tasks/#{id}"
